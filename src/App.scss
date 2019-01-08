@@ -1,0 +1,72 @@
+#background {
+  text-align: center;
+  background-color: #c4d5f7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#calculator {
+  $calculator-height: 410px;
+  $display-height: 60px;
+  width: 300px;
+  height: $calculator-height;
+  background-color: #000000;
+  #display {
+    $formula-height: 25px;
+    #formula {
+      height: $formula-height;
+    }
+    #result {
+      height: $display-height - $formula-height;
+    }
+  }
+  #keyboard {
+    $keyboard-height: $calculator-height - $display-height;
+    $row-height: $keyboard-height / 5;
+    height: $keyboard-height;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: $row-height;
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      border: 1px solid black;
+      user-select: none;
+    }
+    .btn:hover {
+      color: rgb(0, 0, 0);
+      border: 2px solid rgb(126, 126, 126);
+    }
+    .ac-btn {
+      grid-column-start: 1;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      background-color: rgb(192, 60, 60);
+    }
+    .equal-btn {
+      grid-column-start: 4;
+      grid-column-end: 5;
+      grid-row-start: 4;
+      grid-row-end: 6;
+      background-color: rgb(68, 106, 155);
+    }
+    .zero-btn {
+      grid-column-start: 1;
+      grid-column-end: 3;
+      grid-row-start: 5;
+      grid-row-end: 6;
+    }
+    .operator-btn {
+      background-color: rgb(138, 138, 138);
+    }
+    .number-btn {
+      background-color: rgb(54, 54, 54);
+    }
+  }
+}
