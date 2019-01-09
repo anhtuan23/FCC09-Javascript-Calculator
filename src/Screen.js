@@ -1,35 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types'
 import './App.scss';
 
-class Screen extends Component {
-  render() {
-    return (
-      <div id="screen">
-        <Formula formula={this.props.formula}/>
-        <Result result={this.props.result}/>
-      </div>
-    );
-  }
+const Screen = ({ formula, result }) => (
+  < div id="screen" >
+    <Formula formula={formula} />
+    <Result result={result} />
+  </div >
+)
+
+Screen.propTypes = {
+  formula: PropTypes.array.isRequired,
+  result: PropTypes.string.isRequired
 }
 
-class Formula extends Component {
-  render() {
-    return (
-      <div id="formula">
-        {this.props.formula}
-      </div>
-    );
-  }
-}
+const Formula = ({ formula }) => (
+  <div id="formula">
+    {formula}
+  </div>
+)
 
-class Result extends Component {
-  render() {
-    return (
-      <div id="display">
-        {this.props.result}
-      </div>
-    );
-  }
-}
+Formula.propTypes = { formula: PropTypes.array.isRequired }
+
+const Result = ({ result }) => (
+  <div id="display">
+    {result}
+  </div>
+)
+
+Result.propTypes = { result: PropTypes.string.isRequired }
 
 export default Screen;
