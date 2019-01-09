@@ -28,9 +28,11 @@ class Keyboard extends Component {
 }
 
 class Button extends Component {
+
   render() {
+    const returnSymbol = this.props.text === "x" ? "*" : this.props.text;
     return (
-      <div className={'btn ' + this.props.buttonType} id={this.props.id} onClick={() => this.props.handleClick(this.props.text)}>
+      <div className={'btn ' + this.props.buttonType} id={this.props.id} onClick={() => this.props.handleClick(returnSymbol)}>
         {this.props.text}
       </div>
     );

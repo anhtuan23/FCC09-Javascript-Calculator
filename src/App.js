@@ -7,73 +7,58 @@ class Calculator extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formula: '',
-      result: ''
+      formula: [" "],
+      result: ""
     };
     this.handleClick = this.handleClick.bind(this);
-    this.getResult = this.getResult.bind(this);
   }
 
   handleClick(symbol) {
     let formula = this.state.formula;
-    const lastChar = formula.charAt(formula.length - 1);
+    const lastElement = formula[formula.length - 1];
+
     if (symbol === "AC") {
-      formula = "";
-    }
-    //if dot is not preceded by a number
-    else if (symbol === "." && !isNumber(lastChar)) {
-      formula += "0.";
-    }
-    //if the symbol and the last char in formula are both operator
-    else if ("+-x/".includes(symbol) && "+-x/".includes(lastChar)) {
-      formula = formula.slice(0, formula.length - 1) + symbol;
-    }
-    // else if (symbol === "0" && lastChar === "0") {
-    //   //if multiple zeros, do nothing
-    // }
-    else if (/\d/.test(symbol)) {
-      let numberString = this.getLastNumber(formula, true);
-      let newNumberString = numberString + symbol;
-      let newNumber = parseFloat(newNumberString);
-      formula = formula + " ";//to have a place to replace if the final position is not number
-      formula = formula.replace(new RegExp(numberString + " $"), newNumber.toString());
-    }
-    else if (symbol !== "=") {
-      formula += symbol;
+      formula = [" "]
+    } else if (isOperator(symbol)) {
+      if (isOperator(lastElement)) {//do not allow consecutive operators
+        formula.pop();
+      }
+      if (this.state.result !== lastElement){//start a new calculation that operates on the result of the previous evaluation.
+        formula = [this.state.result];//side effect: formula starts with operator will have a preceding 0
+      }
+      formula.push(symbol);
+    } else if (symbol === ".") {
+      if (isOperator(lastElement) || lastElement === " ") {
+        formula.push("0.");
+      } else if (isWholeNumber(lastElement)) {
+        formula.pop();
+        formula.push(lastElement + symbol);
+      }
+    } else if (isWholeNumber(symbol)) {
+      if (isOperator(lastElement) || lastElement === " ") {
+        formula.push(symbol);
+      } else if (lastElement === "0") {
+        formula.pop();
+        formula.push(symbol);
+      } else {
+        formula.pop();
+        formula.push(lastElement + symbol);
+      }
+    } else if (symbol !== "=") {
+      formula.push(symbol);
     }
 
-    let result = this.getResult(formula, symbol === "=");
+    let result = formula[formula.length - 1];
+    if (formula.length === 1 && formula[0] === " ") {
+      result = 0;
+    } else if (symbol === "=") {
+      result = eval(formula.join(""));
+    }
 
     this.setState({
       formula,
       result
     });
-  }
-
-  getResult(formula, needCalculation) {
-    if (formula === "") return 0;
-    if (needCalculation) {
-      formula = formula.replace("x", "*");
-      if (/[*/]/.test(formula.charAt(0))) {//remove */ from beginning
-        formula = formula.slice(1);
-      }
-      if (/[+\-*/]/.test(formula.charAt(formula.length - 1))) {//remove +-*/ from ending
-        formula = formula.slice(0, formula.length - 1);
-      }
-      return eval(formula);
-    }
-    else return this.getLastNumber(formula, false);
-  }
-
-  getLastNumber(formula, isEndOfFormula) {
-    const regex = isEndOfFormula ? /\d+\.?\d*$/g : /\d+\.?\d*/g
-    const matchArr = formula.match(regex);
-    if (matchArr !== null && matchArr.length > 0) {
-      return matchArr[matchArr.length - 1];
-    } else {
-      return "";
-    }
-
   }
 
   render() {
@@ -88,8 +73,16 @@ class Calculator extends Component {
   }
 }
 
-function isNumber(char) {
-  return /\d/.test(char);
+function isNumber(string) {
+  return /^\d+\.?\d*$/g.test(string);
+}
+
+function isWholeNumber(string) {
+  return /^\d+$/g.test(string);
+}
+
+function isOperator(char) {
+  return "+-*/".includes(char)
 }
 
 export default Calculator;
