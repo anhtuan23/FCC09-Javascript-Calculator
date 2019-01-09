@@ -6,6 +6,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: white;
 }
 
 #calculator {
@@ -14,12 +15,14 @@
   width: 300px;
   height: $calculator-height;
   background-color: #000000;
-  #display {
+  #screen {
     $formula-height: 25px;
+
+    text-align: end;
     #formula {
       height: $formula-height;
     }
-    #result {
+    #display {
       height: $display-height - $formula-height;
     }
   }
@@ -34,7 +37,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
       border: 1px solid black;
       user-select: none;
     }

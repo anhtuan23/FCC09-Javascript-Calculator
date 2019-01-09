@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.scss';
 
-class Display extends Component {
+class Screen extends Component {
   render() {
     return (
-      <div id="display">
-        <Formula />
-        <Result />
+      <div id="screen">
+        <Formula formula={this.props.formula}/>
+        <Result result={this.props.result}/>
       </div>
     );
   }
@@ -16,6 +16,7 @@ class Formula extends Component {
   render() {
     return (
       <div id="formula">
+        {this.props.formula}
       </div>
     );
   }
@@ -24,10 +25,11 @@ class Formula extends Component {
 class Result extends Component {
   render() {
     return (
-      <div id="result">
+      <div id="display">
+        {this.props.result}
       </div>
     );
   }
 }
 
-export default Display;
+export default Screen;
