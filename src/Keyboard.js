@@ -2,25 +2,31 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './App.scss';
 
+const buttonArr = [
+  { text: "AC", buttonType: "ac-btn", id: "clear" },
+  { text: "=", buttonType: "equal-btn", id: "equals" },
+  { text: "0", buttonType: "number-btn zero-btn", id: "zero" },
+  { text: "/", buttonType: "operator-btn", id: "divide" },
+  { text: "x", buttonType: "operator-btn", id: "multiply" },
+  { text: "7", buttonType: "number-btn", id: "seven" },
+  { text: "8", buttonType: "number-btn", id: "eight" },
+  { text: "9", buttonType: "number-btn", id: "nine" },
+  { text: "-", buttonType: "operator-btn", id: "subtract" },
+  { text: "4", buttonType: "number-btn", id: "four" },
+  { text: "5", buttonType: "number-btn", id: "five" },
+  { text: "6", buttonType: "number-btn", id: "six" },
+  { text: "+", buttonType: "operator-btn", id: "add" },
+  { text: "1", buttonType: "number-btn", id: "one" },
+  { text: "2", buttonType: "number-btn", id: "two" },
+  { text: "3", buttonType: "number-btn", id: "three" },
+  { text: ".", buttonType: "number-btn", id: "decimal" },
+];
+
 const Keyboard = ({ handleClick }) => (
   <div id="keyboard">
-    <Button text={"AC"} buttonType={"ac-btn"} id={"clear"} handleClick={handleClick} />
-    <Button text={"="} buttonType={"equal-btn"} id={"equals"} handleClick={handleClick} />
-    <Button text={"0"} buttonType={"number-btn zero-btn"} id={"zero"} handleClick={handleClick} />
-    <Button text={"/"} buttonType={"operator-btn"} id={"divide"} handleClick={handleClick} />
-    <Button text={"x"} buttonType={"operator-btn"} id={"multiply"} handleClick={handleClick} />
-    <Button text={"7"} buttonType={"number-btn"} id={"seven"} handleClick={handleClick} />
-    <Button text={"8"} buttonType={"number-btn"} id={"eight"} handleClick={handleClick} />
-    <Button text={"9"} buttonType={"number-btn"} id={"nine"} handleClick={handleClick} />
-    <Button text={"-"} buttonType={"operator-btn"} id={"subtract"} handleClick={handleClick} />
-    <Button text={"4"} buttonType={"number-btn"} id={"four"} handleClick={handleClick} />
-    <Button text={"5"} buttonType={"number-btn"} id={"five"} handleClick={handleClick} />
-    <Button text={"6"} buttonType={"number-btn"} id={"six"} handleClick={handleClick} />
-    <Button text={"+"} buttonType={"operator-btn"} id={"add"} handleClick={handleClick} />
-    <Button text={"1"} buttonType={"number-btn"} id={"one"} handleClick={handleClick} />
-    <Button text={"2"} buttonType={"number-btn"} id={"two"} handleClick={handleClick} />
-    <Button text={"3"} buttonType={"number-btn"} id={"three"} handleClick={handleClick} />
-    <Button text={"."} buttonType={"number-btn"} id={"decimal"} handleClick={handleClick} />
+    {buttonArr.map(e =>
+      <Button text={e.text} buttonType={e.buttonType} id={e.id} key={e.id} handleClick={handleClick} />
+    )}
   </div>
 )
 
